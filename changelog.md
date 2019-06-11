@@ -1,4 +1,9 @@
-# Adafruit nRF52 Bootloader Changelog
+# Amulet nRF52 Bootloader Changelog
+
+## 0.9.0
+- Forked from Adafruit bootloader
+- Created configurations for amulet devices
+- Decided to call this 0.9.0 for pretty much no reason other than it's a higher number
 
 ## 0.2.11
 
