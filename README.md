@@ -1,19 +1,13 @@
-# Adafruit nRF52 Bootloader
+# Amulet of Rune nRF52 Bootloader
 
-[![Build Status](https://travis-ci.com/adafruit/Adafruit_nRF52_Bootloader.svg?branch=master)](https://travis-ci.com/adafruit/Adafruit_nRF52_Bootloader)
+[![Build Status](https://travis-ci.com/maddogjt/Amulet_Bootloader.svg?branch=master)](https://travis-ci.com/maddogjt/Amulet_Bootloader)
 
 This is a CDC/DFU/UF2 bootloader for nRF52 boards.
 
 - [Adafruit Feather nRF52832](https://www.adafruit.com/product/3406)
-- [Adafruit Feather nRF52840 Express](https://www.adafruit.com/product/4062)
-- Adafruit Metro nRF52840 Express
-- [Electronut Labs Papyr](https://docs.electronut.in/papyr/)
-- MakerDiary MDK nRF52840 USB Dongle
-- [Nordic nRF52840DK PCA10056](https://www.nordicsemi.com/Software-and-Tools/Development-Kits/nRF52840-DK)
-- [Nordic nRF52840DK PCA10059 ("Dongle")](https://www.nordicsemi.com/Software-and-Tools/Development-Kits/nRF52840-Dongle)
-- Particle Argon
-- Particle Boron
-- Particle Xenon
+- Amulet Proto Revision
+- Amulet EVT Revision
+- Amulet MP Revision
 
 UF2 is an easy-to-use bootloader that appears as a flash drive. You can just copy `.uf2`-format
 application images to the flash drive to load new firmware.
@@ -40,8 +34,8 @@ to initialize and update  submodules with the `--recursive`` flag.
 Clone this repo with following commands, or fork it for your own development
 
 ```
-git clone https://github.com/adafruit/Adafruit_nRF52_Bootloader
-cd Adafruit_nRF52_Bootloader
+git clone https://github.com/maddogjt/Amulet_Bootloader
+cd Amulet_Bootloader
 git submodule update --init --recursive
 ```
 
@@ -64,36 +58,16 @@ There are two pins, `DFU` and `FRST` that bootloader will check upon reset/power
 - The `GPREGRET` register can also be set to force the bootloader can enter any of above modes (plus a CDC-only mode for Arduino).
 `GPREGRET` is set by the application before performing a soft reset.
 
-On the Nordic PCA10056 DK board, `DFU` is connected to **Button1**, and `FRST` is connected to **Button2**.
-So holding down **Button1** while clicking **RESET** will put the board into USB bootloader mode, with UF2 and CDC support.
-Holding down **Button2** while clicking **RESET** will put the board into OTA (over-the-air) bootloader mode.
-
-On the Nordic PCA10059 Dongle board, `DFU` is connected to the white button.
-`FRST` is connected to pin 1.10. Ground it to pull `FRST` low, as if you had pushed an `FRST`  button.
-There is an adjacent ground pad.
+On Amulet boards, `DFU` is assigned to the labeled `DFU` button.  `FRST` is assigned to Pin6, which is broken out on Proto0 and is the front unpopulated button on EVT/MP
 
 For other boards, please check the board definition for details.
-
-### Making your own UF2
-
-To create your own UF2 DFU update image, simply use the [Python conversion script](https://github.com/Microsoft/uf2/blob/master/utils/uf2conv.py) on a .bin file or .hex file, specifying the family as **0xADA52840**. Be sure to compile your application to start at 0x26000 (152k). If using a .bin file with the conversion script you must specify this with the -b switch.
-
-To create a UF2 image from a .bin file:
-```
-uf2conv.py firmware.bin -c -b 0x26000 -f 0xADA52840
-```
-
-To create a UF2 image from a .hex file:
-```
-uf2conv.py firmware.hex -c -f 0xADA52840
-```
 
 ## Burn & Upgrade with pre-built binaries
 
 You can burn and/or upgrade the bootloader with either a J-link or DFU (serial) to a specific pre-built binary version
 without the hassle of installing a toolchain and compiling the code.
 This is preferred if you are not developing/customizing the bootloader.
-Pre-builtin binaries are available on GitHub [releases](https://github.com/adafruit/Adafruit_nRF52_Bootloader/releases)
+Pre-builtin binaries are available on GitHub [releases](https://github.com/maddogjt/Amulet_Bootloader/releases)
 
 Note: The bootloader can be downgraded. Since the binary release is a merged version of
 of both bootloader and the Nordic SoftDevice, you can freely upgrade/downgrade to any version you like.
@@ -113,31 +87,31 @@ Prerequisites
 To build:
 
 ```
-make BOARD=feather_nrf52840_express all combinehex
+make BOARD=amulet_evt all combinehex
 ```
 
 To flash the bootloader with JLink:
 
 ```
-make BOARD=feather_nrf52840_express flash
+make BOARD=amulet_evt flash
 ```
 
 To upgrade the bootloader using DFU Serial via port /dev/ttyACM0
 
 ```
-make BOARD=feather_nrf52840_express SERIAL=/dev/ttyACM0 dfu-flash
+make BOARD=amulet_evt SERIAL=/dev/ttyACM0 dfu-flash
 ```
 
 To flash SoftDevice (and chip erase):
 
 ```
-make BOARD=feather_nrf52840_express sd
+make BOARD=amulet_evt sd
 ```
 
 To erase all of flash:
 
 ```
-make BOARD=feather_nrf52840_express erase
+make BOARD=amulet_evt erase
 ```
 
 For the list of supported boards, run `make` without `BOARD=` :
@@ -145,7 +119,7 @@ For the list of supported boards, run `make` without `BOARD=` :
 ```
 $ make
 You must provide a BOARD parameter with 'BOARD='
-Supported boards are: feather_nrf52840_express feather_nrf52840_express pca10056
+Supported boards are: amulet_evt amulet_mp amulet_proto0 feather_nrf52832
 Makefile:90: *** BOARD not defined.  Stop
 ```
 
@@ -156,7 +130,7 @@ Makefile:90: *** BOARD not defined.  Stop
 If you get the following error ...
 
 ```
-$ make BOARD=feather_nrf52840_express all 
+$ make BOARD=amulet_evt all 
 Compiling file: main.c
 /bin/sh: /usr/bin/arm-none-eabi-gcc: No such file or directory
 make: *** [_build/main.o] Error 127
@@ -191,5 +165,5 @@ You need to flash the SoftDevice beforehand if you haven't already done so.
 As mentioned above do something like:
 
 ```
-make BOARD=feather_nrf52840_express sd
+make BOARD=amulet_evt sd
 ```
