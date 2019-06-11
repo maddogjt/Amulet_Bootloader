@@ -54,9 +54,9 @@
 // BLE OTA
 //--------------------------------------------------------------------+
 #define BLEDIS_MANUFACTURER "Adafruit Industries"
-#define BLEDIS_MODEL        "Feather nRF52832"
+#define BLEDIS_MODEL        "Feather (Amulet)"
 
-#define UF2_PRODUCT_NAME    "Adafruit Feather nRF52832"
+#define UF2_PRODUCT_NAME   "Adafruit Feather (Amulet)"
 #define UF2_INDEX_URL       "https://www.adafruit.com/product/3406"
 
 #endif // _FEATHER_NRF52832_H

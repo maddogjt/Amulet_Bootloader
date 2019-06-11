@@ -102,7 +102,7 @@ BIN = _bin/$(BOARD)
 # MCU_SUB_VARIANT can be nrf52 (nrf52832), nrf52833, nrf52840
 ifeq ($(MCU_SUB_VARIANT),nrf52)
   SD_NAME = s132
-  DFU_DEV_REV = 0xADAF
+  DFU_DEV_REV = 0xC917
   CFLAGS += -DNRF52 -DNRF52832_XXAA -DS132
   CFLAGS += -DDFU_APP_DATA_RESERVED=7*4096
 else ifeq ($(MCU_SUB_VARIANT),nrf52833)
@@ -272,7 +272,7 @@ CFLAGS += -Wno-cast-function-type
 
 # Defined Symbol (MACROS)
 CFLAGS += -D__HEAP_SIZE=0
-CFLAGS += -DCONFIG_GPIO_AS_PINRESET
+#CFLAGS += -DCONFIG_GPIO_AS_PINRESET
 
 # Skip defining CONFIG_NFCT_PINS_AS_GPIOS if the device uses the NFCT.
 ifneq ($(USE_NFCT),yes)
@@ -394,7 +394,7 @@ $(BUILD)/$(MERGED_FILE).hex: $(BUILD)/$(OUT_NAME).hex
 
 # Create pkg zip file for bootloader+SD combo to use with DFU CDC
 $(BUILD)/$(MERGED_FILE).zip: $(BUILD)/$(OUT_NAME).hex
-	@$(NRFUTIL) dfu genpkg --dev-type 0x0052 --dev-revision $(DFU_DEV_REV) --bootloader $< --softdevice $(SD_HEX) $@
+	@$(NRFUTIL) dfu genpkg --dev-type 0xA137 --dev-revision $(DFU_DEV_REV) --bootloader $< --softdevice $(SD_HEX) $@
 
 #-------------- Artifacts --------------
 $(BIN):
