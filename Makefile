@@ -89,7 +89,7 @@ BUILD = _build-$(BOARD)
 
 ifneq ($(IS_52832),)
 SD_NAME = s132
-DFU_DEV_REV = 0xADAF
+DFU_DEV_REV = 0xC917
 else
 SD_NAME = s140
 DFU_DEV_REV = 52840
@@ -406,4 +406,4 @@ $(BUILD)/$(MERGED_FNAME).hex: $(BUILD)/$(OUTPUT_FILENAME)-nosd.hex
 genpkg: $(BUILD)/$(MERGED_FNAME).zip
 
 $(BUILD)/$(MERGED_FNAME).zip: $(BUILD)/$(OUTPUT_FILENAME)-nosd.hex
-	@$(NRFUTIL) dfu genpkg --dev-type 0x0052 --dev-revision $(DFU_DEV_REV) --bootloader $< --softdevice $(SD_HEX) $@
+	@$(NRFUTIL) dfu genpkg --dev-type 0xA137 --dev-revision $(DFU_DEV_REV) --bootloader $< --softdevice $(SD_HEX) $@
