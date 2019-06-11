@@ -75,18 +75,19 @@
 #include "crc16.h"
 
 /* ADAFRUIT
- * - All firmware init data must has Device Type ADAFRUIT_DEVICE_TYPE (nrf52832 and nrf52840)
+ * - All firmware init data must has Device Type AMULET_DEVICE_TYPE (nrf52832 and nrf52840)
  * - SD + Bootloader upgrade must have correct Device Revision to make sure bootloader is not flashed
  * on the wrong device (e.g flah nRF52832's bootloader on nRF52840 board and vice versa)
  *   - nrf52832 dev-rev is 0xADAF
  *   - nrf52840 dev-rev is  52840
  */
-#define ADAFRUIT_DEVICE_TYPE         0x0052
+//#define ADAFRUIT_DEVICE_TYPE         0x0052
+#define AMULET_DEVICE_TYPE             0xA137
 
 #if defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
-  #define ADAFRUIT_DEV_REV           52840
+  #define AMULET_DEV_REV           52840
 #elif defined NRF52832_XXAA
-  #define ADAFRUIT_DEV_REV           0xADAF
+  #define AMULET_DEV_REV             0xC917
 #else
   #error Unknown MCU
 #endif
@@ -155,7 +156,7 @@ uint32_t dfu_init_prevalidate(uint8_t * p_init_data, uint32_t init_data_len, uin
     // if ((DFU_DEVICE_INFO->device_rev != DFU_DEVICE_REVISION_EMPTY) &&
     //    (p_init_packet->device_rev != DFU_DEVICE_INFO->device_rev))
 
-    if ( p_init_packet->device_type != ADAFRUIT_DEVICE_TYPE )
+    if ( p_init_packet->device_type != AMULET_DEVICE_TYPE )
     {
         return NRF_ERROR_FORBIDDEN;
     }
@@ -163,9 +164,9 @@ uint32_t dfu_init_prevalidate(uint8_t * p_init_data, uint32_t init_data_len, uin
     // Adafruit unlock code must match to upgrade SoftDevice and/or Bootloader
     if ( image_type & (DFU_UPDATE_SD | DFU_UPDATE_BL) )
     {
-      if (p_init_packet->device_rev != ADAFRUIT_DEV_REV)
-      {
-        return NRF_ERROR_FORBIDDEN;
+        if (p_init_packet->device_rev != AMULET_DEV_REV)
+        {
+            return NRF_ERROR_FORBIDDEN;
       }
     }
 

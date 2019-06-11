@@ -22,48 +22,41 @@
  * THE SOFTWARE.
  */
 
-#ifndef _FEATHER_NRF52840_H
-#define _FEATHER_NRF52840_H
-
-#define _PINNUM(port, pin)    ((port)*32 + (pin))
+#ifndef _AMULET_MP_NRF52832_H
+#define _AMULET_MP_NRF52832_H
 
 /*------------------------------------------------------------------*/
 /* LED
  *------------------------------------------------------------------*/
-#define LEDS_NUMBER           2
-#define LED_PRIMARY_PIN       _PINNUM(1, 15)
-#define LED_SECONDARY_PIN     _PINNUM(1, 10)
-#define LED_STATE_ON          1
-
-#define LED_NEOPIXEL           _PINNUM(0, 16)
-#define NEOPIXELS_NUMBER      1
-#define BOARD_RGB_BRIGHTNESS  0x040404
+#define LEDS_NUMBER        1
+#define LED_PRIMARY_PIN    8 // Blue
+// #define LED_SECONDARY_PIN  19 // Blue
+#define LED_STATE_ON       0
 
 /*------------------------------------------------------------------*/
 /* BUTTON
  *------------------------------------------------------------------*/
-#define BUTTONS_NUMBER        2
-#define BUTTON_1              _PINNUM(1, 02)
-#define BUTTON_2              _PINNUM(0, 10)
-#define BUTTON_PULL           NRF_GPIO_PIN_PULLUP
+#define BUTTONS_NUMBER     2    
+#define BUTTON_1           27 // DFU button
+#define BUTTON_2           6  // Not actually connected to anything
+#define BUTTON_PULL        NRF_GPIO_PIN_PULLUP
+
+/*------------------------------------------------------------------*/
+/* UART (only used by nRF52832)
+ *------------------------------------------------------------------*/
+#define RX_PIN_NUMBER      18
+#define TX_PIN_NUMBER      19
+#define CTS_PIN_NUMBER     0
+#define RTS_PIN_NUMBER     0
+#define HWFC               false
 
 //--------------------------------------------------------------------+
 // BLE OTA
 //--------------------------------------------------------------------+
-#define BLEDIS_MANUFACTURER   "Adafruit Industries"
-#define BLEDIS_MODEL          "Feather nRF52840 Express"
+#define BLEDIS_MANUFACTURER "NARC"
+#define BLEDIS_MODEL "Amulet of Rune"
 
-//--------------------------------------------------------------------+
-// USB
-//--------------------------------------------------------------------+
-#define USB_DESC_VID           0x239A
-#define USB_DESC_UF2_PID       0x0029
-#define USB_DESC_CDC_ONLY_PID  0x002A
+#define UF2_PRODUCT_NAME "Amulet of Rune"
+#define UF2_INDEX_URL "https://github.com/maddogjt/Amulet_Bootloader"
 
-//------------- UF2 -------------//
-#define UF2_PRODUCT_NAME      "Adafruit Feather nRF52840 Express"
-#define UF2_VOLUME_LABEL      "FTHR840BOOT"
-#define UF2_BOARD_ID          "nRF52840-Feather-revD"
-#define UF2_INDEX_URL         "https://www.adafruit.com/product/4062"
-
-#endif // _FEATHER_NRF52840_H
+#endif // _AMULET_MP_NRF52832_H
