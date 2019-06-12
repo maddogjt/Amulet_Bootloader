@@ -76,7 +76,7 @@ remduplicates = $(strip $(if $1,$(firstword $1) $(call remduplicates,$(filter-ou
 #*********************************
 BOARD_LIST = $(sort $(subst .h,,$(subst src/boards/,,$(wildcard src/boards/*))))
 
-NRF52832_BOARDLIST = feather_nrf52832 amulet_proto0 amulet_evt amulet_mp pca10056
+NRF52832_BOARDLIST = feather_nrf52832 amulet_proto0 amulet_mp
 IS_52832 = $(filter $(BOARD),$(NRF52832_BOARDLIST))
 
 ifeq ($(filter $(BOARD),$(BOARD_LIST)),)

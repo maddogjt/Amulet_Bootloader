@@ -87,31 +87,31 @@ Prerequisites
 To build:
 
 ```
-make BOARD=amulet_evt all combinehex
+make BOARD=amulet_mp all combinehex
 ```
 
 To flash the bootloader with JLink:
 
 ```
-make BOARD=amulet_evt flash
+make BOARD=amulet_mp flash
 ```
 
 To upgrade the bootloader using DFU Serial via port /dev/ttyACM0
 
 ```
-make BOARD=amulet_evt SERIAL=/dev/ttyACM0 dfu-flash
+make BOARD=amulet_mp SERIAL=/dev/ttyACM0 dfu-flash
 ```
 
 To flash SoftDevice (and chip erase):
 
 ```
-make BOARD=amulet_evt sd
+make BOARD=amulet_mp sd
 ```
 
 To erase all of flash:
 
 ```
-make BOARD=amulet_evt erase
+make BOARD=amulet_mp erase
 ```
 
 For the list of supported boards, run `make` without `BOARD=` :
@@ -119,7 +119,7 @@ For the list of supported boards, run `make` without `BOARD=` :
 ```
 $ make
 You must provide a BOARD parameter with 'BOARD='
-Supported boards are: amulet_evt amulet_mp amulet_proto0 feather_nrf52832
+Supported boards are: amulet_mp amulet_proto0 feather_nrf52832
 Makefile:90: *** BOARD not defined.  Stop
 ```
 
@@ -130,7 +130,7 @@ Makefile:90: *** BOARD not defined.  Stop
 If you get the following error ...
 
 ```
-$ make BOARD=amulet_evt all 
+$ make BOARD=amulet_mp all 
 Compiling file: main.c
 /bin/sh: /usr/bin/arm-none-eabi-gcc: No such file or directory
 make: *** [_build/main.o] Error 127
@@ -165,5 +165,5 @@ You need to flash the SoftDevice beforehand if you haven't already done so.
 As mentioned above do something like:
 
 ```
-make BOARD=amulet_evt sd
+make BOARD=amulet_mp sd
 ```
