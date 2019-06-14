@@ -1,6 +1,6 @@
 <!DOCTYPE CrossStudio_Project_File>
-<solution Name="Adafruit_nRF52_Bootloader" target="8" version="2">
-  <project Name="Adafruit_nRF52_Bootloader">
+<solution Name="Amulet_Bootloader" target="8" version="2">
+  <project Name="Amulet_Bootloader">
     <configuration
       Name="Common"
       Placement="Flash"
@@ -70,6 +70,7 @@
         <file file_name="../usb/usb_desc.c" />
         <file file_name="../usb/usb_desc.h" />
         <configuration Name="Feather52832" build_exclude_from_build="Yes" />
+        <configuration Name="AmuletMP" build_exclude_from_build="Yes" />
       </folder>
       <folder Name="cmsis">
         <folder Name="include">
@@ -92,10 +93,14 @@
         </folder>
       </folder>
       <folder Name="boards">
-        <file file_name="../boards/pca10056.h" />
         <file file_name="../boards/feather_nrf52832.h" />
-        <file file_name="../boards/feather_nrf52840_express.h" />
-        <file file_name="../boards/pca10059.h" />
+        <file file_name="../boards/amulet_mp.h" />
+        <folder Name="feather_nrf52832">
+          <file file_name="../boards/feather_nrf52832/board.h" />
+        </folder>
+        <folder Name="amulet_mp">
+          <file file_name="../boards/amulet_mp/board.h" />
+        </folder>
       </folder>
       <file file_name="../dfu_init.c" />
       <file file_name="../boards.c" />
@@ -234,6 +239,7 @@
           </folder>
         </folder>
         <configuration Name="Feather52832" build_exclude_from_build="Yes" />
+        <configuration Name="AmuletMP" build_exclude_from_build="Yes" />
       </folder>
       <folder Name="nrfx">
         <file file_name="../../lib/nrfx/nrfx.h" />
@@ -327,10 +333,6 @@
             <configuration
               Name="Feather52840 Size++"
               build_exclude_from_build="Yes" />
-            <configuration
-              Name="Feather52840"
-              build_exclude_from_build="Yes" />
-            <configuration Name="PCA10056" build_exclude_from_build="Yes" />
           </file>
           <file file_name="../../lib/nrfx/mdk/ses_startup_nrf52840.s">
             <configuration
@@ -339,6 +341,7 @@
             <configuration
               Name="Feather52832"
               build_exclude_from_build="Yes" />
+            <configuration Name="AmuletMP" build_exclude_from_build="Yes" />
           </file>
           <file file_name="../../lib/nrfx/mdk/ses_startup_nrf_common.s">
             <configuration
@@ -350,16 +353,13 @@
             <configuration
               Name="Feather52840 Size++"
               build_exclude_from_build="Yes" />
-            <configuration
-              Name="Feather52840"
-              build_exclude_from_build="Yes" />
-            <configuration Name="PCA10056" build_exclude_from_build="Yes" />
           </file>
           <file file_name="../../lib/nrfx/mdk/system_nrf52.h" />
           <file file_name="../../lib/nrfx/mdk/system_nrf52840.c">
             <configuration
               Name="Feather52832"
               build_exclude_from_build="Yes" />
+            <configuration Name="AmuletMP" build_exclude_from_build="Yes" />
           </file>
           <file file_name="../../lib/nrfx/mdk/system_nrf52840.h" />
         </folder>
@@ -374,25 +374,18 @@
       </folder>
     </folder>
     <configuration
-      Name="Feather52840"
-      c_preprocessor_definitions="NRF52840_XXAA;S140"
-      c_user_include_directories=".;../boards/feather_nrf52840_express"
-      gcc_optimization_level="Debug"
-      linker_memory_map_file="nRF52840_xxAA_MemoryMap.xml" />
-    <configuration
       Name="Feather52832"
       c_preprocessor_definitions="NRF52832_XXAA;S132"
       c_user_include_directories=".;../boards/feather_nrf52832"
       gcc_optimization_level="Debug"
       linker_memory_map_file="nRF52832_xxAA_MemoryMap.xml" />
     <configuration
-      Name="PCA10056"
-      c_preprocessor_definitions="NRF52840_XXAA;S140"
-      c_user_include_directories=".;../boards/pca10056"
+      Name="AmuletMP"
+      c_preprocessor_definitions="NRF52832_XXAA;S132"
+      c_user_include_directories=".;../boards/amulet_mp"
       gcc_optimization_level="Debug"
-      linker_memory_map_file="nRF52840_xxAA_MemoryMap.xml" />
+      linker_memory_map_file="nRF52832_xxAA_MemoryMap.xml" />
   </project>
-  <configuration Name="Feather52840" />
   <configuration Name="Feather52832" />
-  <configuration Name="PCA10056" />
+  <configuration Name="AmuletMP" gcc_optimization_level="Debug" />
 </solution>
