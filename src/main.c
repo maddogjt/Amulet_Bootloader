@@ -103,6 +103,7 @@ void usb_teardown(void);
 #define DFU_MAGIC_OTA_RESET             0xA8
 #define DFU_MAGIC_SERIAL_ONLY_RESET     0x4e
 #define DFU_MAGIC_UF2_RESET             0x57
+#define DFU_MAGIC_IGNORE_PIN			0xC6
 
 #define DFU_DBL_RESET_MAGIC             0x5A1AD5      // SALADS
 #define DFU_DBL_RESET_DELAY             500
@@ -161,8 +162,10 @@ int main(void)
   bool dfu_start = _ota_dfu || serial_only_dfu || (NRF_POWER->GPREGRET == DFU_MAGIC_UF2_RESET) ||
                     (((*dbl_reset_mem) == DFU_DBL_RESET_MAGIC) && (NRF_POWER->RESETREAS & POWER_RESETREAS_RESETPIN_Msk));
 
+  bool cancel_dfu = NRF_POWER->GPREGRET ==DFU_MAGIC_IGNORE_PIN;
+
   // Clear GPREGRET if it is our values
-  if (dfu_start) NRF_POWER->GPREGRET = 0;
+  if (dfu_start || cancel_dfu) NRF_POWER->GPREGRET = 0;
 
   // Save bootloader version to pre-defined register, retrieved by application
   BOOTLOADER_VERSION_REGISTER = (MK_BOOTLOADER_VERSION);
@@ -188,7 +191,13 @@ int main(void)
 
   /*------------- Determine DFU mode (Serial, OTA, FRESET or normal) -------------*/
   // DFU button pressed
-  dfu_start  = dfu_start || button_pressed(BUTTON_DFU);
+  if ( (NRF_POWER->RESETREAS & POWER_RESETREAS_OFF_Msk) == 0) {
+	dfu_start  = dfu_start || button_pressed(BUTTON_DFU);
+  }
+
+  if (cancel_dfu) {
+	  dfu_start = false;
+  }
 
   // DFU + FRESET are pressed --> OTA
   _ota_dfu = _ota_dfu  || ( button_pressed(BUTTON_DFU) && button_pressed(BUTTON_FRESET) ) ;
@@ -196,7 +205,7 @@ int main(void)
   bool const valid_app = bootloader_app_is_valid(DFU_BANK_0_REGION_START);
 
   // App mode: register 1st reset and DFU startup (nrf52832)
-  if ( ! (dfu_start || !valid_app) )
+  if ( ! (dfu_start || !valid_app) && !cancel_dfu)
   {
     // Register our first reset for double reset detection
     (*dbl_reset_mem) = DFU_DBL_RESET_MAGIC;
